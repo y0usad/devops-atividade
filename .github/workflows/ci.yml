@@ -1,4 +1,4 @@
-name: CI
+name: CI - Testes unitários
 
 on:
   push:
@@ -25,10 +25,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Verificar a aplicação Flask
-        run: |
-          python -m compileall -q app.py
-          python -c "from app import app; resposta = app.test_client().get('/'); assert resposta.status_code == 200"
+      - name: Executar testes unitários
+        run: python -m unittest discover --start-directory tests --verbose
 
       - name: Construir a imagem Docker
         run: docker build --tag devops-atividade .
